@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="newdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="city1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__City___398D8EEE" FromRole="Citys" ToRole="Customers" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Customer_id" />
+    </Key>
+    <Property Name="Customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customer_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="City_id" Type="Int32" />
+    <Property Name="Phone" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Photo" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Customers__City___398D8EEE" FromRole="Customers" ToRole="Citys" />
+  </EntityType>
+  <Association Name="FK__Customers__City___398D8EEE">
+    <End Role="Citys" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citys">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="City_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="newdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Citys" EntityType="Self.City" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <AssociationSet Name="FK__Customers__City___398D8EEE" Association="Self.FK__Customers__City___398D8EEE">
+      <End Role="Citys" EntitySet="Citys" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
